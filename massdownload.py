@@ -48,12 +48,15 @@ class DownloaderApp:
         self.status.grid(row=4, column=0, columnspan=3)
 
     def select_csv(self):
-        path = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
+        path = filedialog.askopenfilename(
+            filetypes=[("CSV files", "*.csv")],
+            initialdir=os.path.expanduser("~/Downloads"),
+        )
         if path:
             self.csv_path.set(path)
 
     def select_folder(self):
-        path = filedialog.askdirectory()
+        path = filedialog.askdirectory(initialdir=os.path.expanduser("~"))
         if path:
             self.output_path.set(path)
 
