@@ -67,17 +67,32 @@ class DownloaderApp:
 
     def run_download(self):
         try:
+            # --- Define helper function ---
+            def open_csv_safely(path):
+                for enc in ("utf-8", "cp1252", "latin-1"):
+                    try:
+                        f = open(path, newline="", encoding=enc, errors="replace")
+                        f.read(1024)  # test read
+                        f.seek(0)
+                        return f
+                    except Exception:
+                        if "f" in locals():
+                            f.close()
+                        continue
+                raise ValueError("Could not read file")
+
             # --- Detect delimiter ---
-            with open(self.csv_path.get(), encoding="utf-8") as f:
+            with open_csv_safely(self.csv_path.get()) as f:
                 sample = f.read(1024)
                 try:
                     dialect = csv.Sniffer().sniff(sample)
                     delimiter = dialect.delimiter
                 except:
-                    delimiter = ";"  # fallback (Excel Sweden)
+                    delimiter = ";"  # fallback
 
             # --- Read CSV ---
-            with open(self.csv_path.get(), newline="", encoding="utf-8") as f:
+
+            with open_csv_safely(self.csv_path.get()) as f:
                 reader = csv.reader(f, delimiter=delimiter)
                 rows = [row for row in reader if len(row) >= 2]
 

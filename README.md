@@ -1,3 +1,7 @@
+# Author
+Igor Petersson - https://github.com/IgorKPetersson/
+
+
 # Image Downloader Tool
 A simple GUI tool to download images from a CSV file and organize them by article number.
 
@@ -36,5 +40,5 @@ pyinstaller --onefile --noconsole massdownload.py
 The executable will be in the `dist/` folder.
 
 ## Notes
-Works best with direct image URLs
+Works best with direct image URLs.
 Avoid setting too high parallel downloads to prevent blocking
